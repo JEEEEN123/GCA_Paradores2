@@ -1,14 +1,16 @@
+using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
+using TMPro;
+//using DG.Tweening;
+//using UnityEngine.SceneManagement; // 씬 매니지먼트 
 
 public class UIManager : MonoBehaviour
 {
     #region SingleTon Pattern
     public static UIManager instance;  // Singleton instance
+
     void Awake() // SingleTon
     {
         // 이미 인스턴스가 존재하면서 이게 아니면 파괴 반환
@@ -23,30 +25,45 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
-    [Header("TitleScreen")]
-    public GameObject titleInfoPanel;
+    [Header("Fade")]
 
-    //[Header("LobbyScreen")]
-    //public GameObject LobbyInfoPanel;
+    [SerializeField]
+    private float fadeDuration; // 암전 시간 
+    public Image fadeImg; // 암전 화면 
 
 
-    public void UIClickSound()
+
+    private void Start()
     {
-        //AudioManager.Instance.PlaySfx(AudioManager.SFX.SFX_UI_ClickSound);
+
     }
 
 
-    //타이틀 스크린
-    #region TitleScreen 
-    public void OnClickedTitleAccept() // title accept 누르면 
+    // 화면 암전
+    public void ScreenFade(int set, string sceneName)
     {
-        UIClickSound();
-        // 씬 전환 
-        Debug.Log("씬전환 ");
+        /* 닷트윈 사용하는 fade 
+        var sequence = DOTween.Sequence();
+
+        if (set == 1)
+        {
+            // 암전 
+            sequence.Append(fadeImg.DOFade(1, fadeDuration));
+
+            sequence.AppendCallback(() => {
+                //Insert your logic here.
+                GameManager.Instance.FadeCallback(sceneName);
+            });
+        }
+        else
+        {
+            // 암전 해제 
+            sequence.Append(fadeImg.DOFade(0, fadeDuration));
+        }
+
+        sequence.Play();
+        */
 
     }
-
-    #endregion
-
 
 }
