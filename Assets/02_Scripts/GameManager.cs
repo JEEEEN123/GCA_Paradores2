@@ -1,4 +1,3 @@
-//using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -26,7 +25,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    // potal은 씬 생성 호출 후 사라지므로, 생성은 게임 매니저가 맡는다.
+    // 씬 로드 요청
     public void LoadSceneCall(string sceneName)
     {
         //화면 암전 시작

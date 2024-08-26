@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-//using DG.Tweening;
+using DG.Tweening;
 //using UnityEngine.SceneManagement; // 씬 매니지먼트 
 
 public class UIManager : MonoBehaviour
@@ -32,7 +32,6 @@ public class UIManager : MonoBehaviour
     public Image fadeImg; // 암전 화면 
 
 
-
     private void Start()
     {
 
@@ -42,7 +41,7 @@ public class UIManager : MonoBehaviour
     // 화면 암전
     public void ScreenFade(int set, string sceneName)
     {
-        /* 닷트윈 사용하는 fade 
+        // 닷트윈 사용하는 fade 
         var sequence = DOTween.Sequence();
 
         if (set == 1)
@@ -62,7 +61,6 @@ public class UIManager : MonoBehaviour
         }
 
         sequence.Play();
-        */
 
     }
 
