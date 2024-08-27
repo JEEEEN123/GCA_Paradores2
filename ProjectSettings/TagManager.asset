@@ -18,6 +18,7 @@ TagManager:
   - VRUISlider
   - VRUIButtonIcon
   - VRUIAccent
+  - COIN
   layers:
   - Default
   - TransparentFX
