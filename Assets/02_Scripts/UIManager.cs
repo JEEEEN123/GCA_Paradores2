@@ -47,8 +47,15 @@ public class UIManager : MonoBehaviour
     {
         fadeImg = GameObject.FindWithTag("VRUIBackground").transform.GetChild(0).GetComponent<Image>();
         popupPanel = GameObject.FindWithTag("VRUIBackground").transform.GetChild(1).gameObject;
-        titleText = popupPanel.transform.GetChild(0).GetComponent<Text>();
-        contentText = popupPanel.transform.GetChild(1).GetComponent<Text>();
+        if(popupPanel != null )
+        {
+            titleText = popupPanel.transform.GetChild(0).GetComponent<Text>();
+            contentText = popupPanel.transform.GetChild(1).GetComponent<Text>();
+        }
+        else
+        {
+            Debug.Log("popup 패널 못찾음");
+        }
     }
 
     // 화면 암전
