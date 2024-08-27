@@ -29,17 +29,30 @@ public class UIManager : MonoBehaviour
 
     [SerializeField]
     private float fadeDuration; // 암전 시간 
-    public Image fadeImg; // 암전 화면 
+    private Image fadeImg; // 암전 화면 
+
+    [Header("Pop up")]
+    private GameObject popupPanel;
+    private Text titleText;
+    private Text contentText;
+
 
 
     private void Start()
     {
-
+        InitUI();
     }
 
+    public void InitUI()
+    {
+        fadeImg = GameObject.FindWithTag("VRUIBackground").transform.GetChild(0).GetComponent<Image>();
+        popupPanel = GameObject.FindWithTag("VRUIBackground").transform.GetChild(1).gameObject;
+        titleText = popupPanel.transform.GetChild(0).GetComponent<Text>();
+        contentText = popupPanel.transform.GetChild(1).GetComponent<Text>();
+    }
 
     // 화면 암전
-    public void ScreenFade(int set, string sceneName)
+    public void ScreenFade(int set)
     {
         // 닷트윈 사용하는 fade 
         var sequence = DOTween.Sequence();
@@ -51,7 +64,7 @@ public class UIManager : MonoBehaviour
 
             sequence.AppendCallback(() => {
                 //Insert your logic here.
-                GameManager.Instance.FadeCallback(sceneName);
+                GameManager.Instance.FadeCallback();
             });
         }
         else
@@ -64,4 +77,37 @@ public class UIManager : MonoBehaviour
 
     }
 
+    // popup 창 띄우기
+    public void ShowPopup(string newTitleText, string newContextText)
+    {
+        if (popupPanel != null)
+        {
+            popupPanel.SetActive(true);
+            Debug.Log("팝업 띄우기");
+
+            titleText.text = newTitleText;
+            contentText.text = newContextText;
+        }
+        else
+        {
+            Debug.Log("팝업 패널을 찾을 수 없음 ");
+
+        }
+    }
+
+    public void ClosePopup()
+    {
+        if (popupPanel != null)
+        {
+            popupPanel.SetActive(false);
+            Debug.Log("팝업 끄기");
+
+
+        }
+        else
+        {
+            Debug.Log("팝업 패널을 찾을 수 없음 ");
+
+        }
+    }
 }

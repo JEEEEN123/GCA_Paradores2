@@ -24,76 +24,75 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public string[] scenesToLoad;  // 로드할 씬들의 이름 목록
+    private int currentSceneIndex = 0;  // 현재 로드 중인 씬의 인덱스
 
-    // 씬 로드 요청
-    public void LoadSceneCall(string sceneName)
+    private void Start()
     {
-        //화면 암전 시작
-        UIManager.instance.ScreenFade(1, sceneName);
-
+        // 씬 목록 초기화
+        scenesToLoad = new string[] { "Scene_Title", "Scene_Lobby" };
     }
 
-    // 암전 콜백 
-    public void FadeCallback(string sceneName)
+    // 다음 씬 로드 요청
+    public void LoadSceneCall()
     {
-        StartCoroutine(LoadScene(sceneName)); //비동기이므로 코루틴으로 호출 
+        //화면 암전 시작 (페이드 아웃)
+        UIManager.instance.ScreenFade(1);
     }
 
-    // 로드 씬 비동기 실행 
-    public IEnumerator LoadScene(string sceneName)
+    // 암전 완료 후 호출되는 콜백 함수
+    public void FadeCallback()
     {
-        Debug.Log("게임매니저 - 로드씬 실행 됨  ");
+        // 다음 씬 로드 코루틴 시작
+        StartCoroutine(LoadNextScene());
+    }
 
-        // 비동기적으로 씬 로딩
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
-
-
-        Debug.Log("비동기 씬 로딩 시작 ");
-
-        // 씬 로딩이 완료될 때까지 대기
-        while (!asyncLoad.isDone)
+    // 로드 씬 비동기 실행
+    private IEnumerator LoadNextScene()
+    {
+        if (currentSceneIndex < scenesToLoad.Length)
         {
-            yield return null;
-        }
+            currentSceneIndex++;  // 다음 씬 인덱스로 증가
+            string sceneName = scenesToLoad[currentSceneIndex]; // 현재 씬 이름 가져오기
+            
 
-        Debug.Log("비동기 씬 로딩 됨  ");
+            Debug.Log("게임매니저 - 로드씬 실행 됨: " + sceneName);
 
+            // 비동기적으로 씬 로딩
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
-        // 로비로 가는 경우
-        if (sceneName == "Stage0")
-        {
-            /*
-            if (playerTimer != null)
+            Debug.Log("비동기 씬 로딩 시작: " + sceneName);
+
+            // 씬 로딩이 완료될 때까지 대기
+            while (!asyncLoad.isDone)
             {
-                playerTimer.enabled = false; // PlayerTimer 비활성화
+                yield return null;
             }
-            */
 
-            // UIManager.instance.OnClickBattleButton();
-            // UIManager.instance.pickUpScreen.SetActive(true);
-            // UIManager.instance.selectedStageName = preStageName;
+            Debug.Log("비동기 씬 로딩 완료: " + sceneName);
 
-            // 브금 틀기 
-            // AudioManager.instance.PlayBgm(AudioManager.BGM.BGM_Lobby);
+            // 씬 로딩 후, 추가적인 설정 예시
+            if (sceneName == "Scene_Lobby")
+            {
+                // 로비로 가는 경우의 처리
+                // AudioManager.instance.PlayBgm(AudioManager.BGM.BGM_Lobby);
+            }
+            else
+            {
+                // 다른 씬에 들어가는 경우의 처리
+                // 예: 타이머 활성화, UI 설정 등
+            }
+
+            // 화면 암전 해제 (페이드 아웃)
+            UIManager.instance.ScreenFade(0);
         }
         else
         {
-            /*
-            // 게임 맵 들어가는 경우 
-            if (playerTimer != null)
-            {
-                playerTimer.enabled = true; // PlayerTimer 활성화
-            }
-            */
-
+            Debug.LogWarning("현재가 마지막 씬입니다.");
         }
-
-        //화면 암전 끄기 
-        UIManager.instance.ScreenFade(0, sceneName);
-
     }
 
-    //게임 종료
+    // 게임 종료
     public void ExitGame()
     {
 #if UNITY_EDITOR
