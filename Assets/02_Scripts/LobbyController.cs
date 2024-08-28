@@ -15,11 +15,11 @@ public class LobbyController : MonoBehaviour
 
         // 예시 텍스트 설정
         popupTexts = new string[] {
-            "당신은 호텔에 초대되었습니다.",
-            "주변을 둘러보세요.",
-            "밖으로 나가 배를 타십쇼 ."
+            "Senor(Senora), \n\n 호텔 파라도르에 오신 것을 진심으로 환영합니다. \n\n 이곳은 일상에서 벗어나, \n 평온한 시간을 보낼 수 있는 곳입니다.",
+            "오늘은 당신을 위해 특별한 힐링 패키지를 준비했습니다. \n\n 자연 속에서 여유를 찾고, 재충전할 수 있는 시간을 가지세요.",
+            "차분히 숨을 고르시고, \n시작할 준비가 되시면 \n 바닥의 반짝이는 표시로 이동해주세요."
         };
-
+         
         ShowFirstPopup();
     }
     
@@ -31,7 +31,7 @@ public class LobbyController : MonoBehaviour
         {
             
             // 예: UIManager를 통해 텍스트를 팝업에 표시
-            UIManager.instance.ShowPopup("Welcome!",popupTexts[popupIndex]);
+            UIManager.instance.ShowPopup(popupTexts[popupIndex]);
             Debug.Log(popupIndex);
             popupIndex++;
         }

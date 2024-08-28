@@ -33,7 +33,6 @@ public class UIManager : MonoBehaviour
 
     [Header("Pop up")]
     private GameObject popupPanel;
-    private Text titleText;
     private Text contentText;
 
 
@@ -49,8 +48,7 @@ public class UIManager : MonoBehaviour
         popupPanel = GameObject.FindWithTag("VRUIBackground").transform.GetChild(1).gameObject;
         if(popupPanel != null )
         {
-            titleText = popupPanel.transform.GetChild(0).GetComponent<Text>();
-            contentText = popupPanel.transform.GetChild(1).GetComponent<Text>();
+            contentText = popupPanel.transform.GetChild(0).GetComponent<Text>();
         }
         else
         {
@@ -85,14 +83,13 @@ public class UIManager : MonoBehaviour
     }
 
     // popup Ã¢ ¶ç¿ì±â
-    public void ShowPopup(string newTitleText, string newContextText)
+    public void ShowPopup(string newContextText)
     {
         if (popupPanel != null)
         {
             popupPanel.SetActive(true);
             Debug.Log("ÆË¾÷ ¶ç¿ì±â");
 
-            titleText.text = newTitleText;
             contentText.text = newContextText;
         }
         else
