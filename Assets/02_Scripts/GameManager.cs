@@ -24,81 +24,82 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public string[] scenesToLoad;  // ·ÎµåÇÒ ¾ÀµéÀÇ ÀÌ¸§ ¸ñ·Ï
-    private int currentSceneIndex = 0;  // ÇöÀç ·Îµå ÁßÀÎ ¾ÀÀÇ ÀÎµ¦½º
+    public string[] scenesToLoad;  // ï¿½Îµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½
+    private int currentSceneIndex = 0;  // ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½
 
     private void Start()
     {
-        // ¾À ¸ñ·Ï ÃÊ±âÈ­
-        scenesToLoad = new string[] { "Scene_Title", "Scene_Lobby" };
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+        scenesToLoad = new string[] { "Scene_Swing", "Scene_Lobby" };
+        //scenesToLoad = new string[] { "Scene_Title", "Scene_Lobby" };
     }
 
-    // ´ÙÀ½ ¾À ·Îµå ¿äÃ»
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½Ã»
     public void LoadSceneCall()
     {
-        //È­¸é ¾ÏÀü ½ÃÀÛ (ÆäÀÌµå ¾Æ¿ô)
+        //È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½)
         UIManager.instance.ScreenFade(1);
     }
 
-    // ¾ÏÀü ¿Ï·á ÈÄ È£ÃâµÇ´Â ÄÝ¹é ÇÔ¼ö
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ ï¿½ï¿½ È£ï¿½ï¿½Ç´ï¿½ ï¿½Ý¹ï¿½ ï¿½Ô¼ï¿½
     public void FadeCallback()
     {
-        // ´ÙÀ½ ¾À ·Îµå ÄÚ·çÆ¾ ½ÃÀÛ
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
         StartCoroutine(LoadNextScene());
     }
 
-    // ·Îµå ¾À ºñµ¿±â ½ÇÇà
+    // ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ñµ¿±ï¿½ ï¿½ï¿½ï¿½ï¿½
     private IEnumerator LoadNextScene()
     {
         if (currentSceneIndex < scenesToLoad.Length)
         {
-            currentSceneIndex++;  // ´ÙÀ½ ¾À ÀÎµ¦½º·Î Áõ°¡
-            string sceneName = scenesToLoad[currentSceneIndex]; // ÇöÀç ¾À ÀÌ¸§ °¡Á®¿À±â
+            currentSceneIndex++;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            string sceneName = scenesToLoad[currentSceneIndex]; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             
 
-            Debug.Log("°ÔÀÓ¸Å´ÏÀú - ·Îµå¾À ½ÇÇà µÊ: " + sceneName);
+            Debug.Log("ï¿½ï¿½ï¿½Ó¸Å´ï¿½ï¿½ï¿½ - ï¿½Îµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½: " + sceneName);
 
-            // ºñµ¿±âÀûÀ¸·Î ¾À ·Îµù
+            // ï¿½ñµ¿±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Îµï¿½
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
-            Debug.Log("ºñµ¿±â ¾À ·Îµù ½ÃÀÛ: " + sceneName);
+            Debug.Log("ï¿½ñµ¿±ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½: " + sceneName);
 
-            // ¾À ·ÎµùÀÌ ¿Ï·áµÉ ¶§±îÁö ´ë±â
+            // ï¿½ï¿½ ï¿½Îµï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             while (!asyncLoad.isDone)
             {
                 yield return null;
             }
 
-            Debug.Log("ºñµ¿±â ¾À ·Îµù ¿Ï·á: " + sceneName);
+            Debug.Log("ï¿½ñµ¿±ï¿½ ï¿½ï¿½ ï¿½Îµï¿½ ï¿½Ï·ï¿½: " + sceneName);
 
-            // ¾À ·Îµù ÈÄ, Ãß°¡ÀûÀÎ ¼³Á¤ ¿¹½Ã
+            // ï¿½ï¿½ ï¿½Îµï¿½ ï¿½ï¿½, ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (sceneName == "Scene_Lobby")
             {
-                // ·Îºñ·Î °¡´Â °æ¿ìÀÇ Ã³¸®
+                // ï¿½Îºï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
                 // AudioManager.instance.PlayBgm(AudioManager.BGM.BGM_Lobby);
             }
             else
             {
-                // ´Ù¸¥ ¾À¿¡ µé¾î°¡´Â °æ¿ìÀÇ Ã³¸®
-                // ¿¹: Å¸ÀÌ¸Ó È°¼ºÈ­, UI ¼³Á¤ µî
+                // ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+                // ï¿½ï¿½: Å¸ï¿½Ì¸ï¿½ È°ï¿½ï¿½È­, UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             }
 
-            // È­¸é ¾ÏÀü ÇØÁ¦ (ÆäÀÌµå ¾Æ¿ô)
+            // È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Æ¿ï¿½)
             UIManager.instance.ScreenFade(0);
         }
         else
         {
-            Debug.LogWarning("ÇöÀç°¡ ¸¶Áö¸· ¾ÀÀÔ´Ï´Ù.");
+            Debug.LogWarning("ï¿½ï¿½ï¿½ç°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
         }
     }
 
-    // °ÔÀÓ Á¾·á
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void ExitGame()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit(); // ¾îÇÃ¸®ÄÉÀÌ¼Ç Á¾·á
+        Application.Quit(); // ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 #endif
     }
 
