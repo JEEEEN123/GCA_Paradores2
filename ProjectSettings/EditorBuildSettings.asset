@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01_Scenes/Scene_Swing.unity
     guid: 7dc1e4d91fb15e247b52ac6c4717d336
+  - enabled: 1
+    path: Assets/01_Scenes/Scene_Test.unity
+    guid: 7bdc8751b7619ff41aa9066190a0f2fb
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b8918172f5deaf34fbfb975d492e8678,
       type: 2}
