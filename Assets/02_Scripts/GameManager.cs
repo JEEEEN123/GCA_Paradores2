@@ -24,72 +24,67 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    public string[] scenesToLoad;  // �ε��� ������ �̸� ���
-    private int currentSceneIndex = 0;  // ���� �ε� ���� ���� �ε���
+    public string[] scenesToLoad;
+    [SerializeField]
+    public int currentSceneIndex = 0;  // 현재 씬 넘버 . 0~6 
 
     private void Start()
     {
-        // �� ��� �ʱ�ȭ
-        scenesToLoad = new string[] { "Scene_Swing", "Scene_Lobby" };
-        //scenesToLoad = new string[] { "Scene_Title", "Scene_Lobby" };
+        // 로드할 씬 목록 
+        scenesToLoad = new string[] { "Scene_Title", "Scene_Lobby", "Scene_boat", "Scene_Fountain", "Scene_Swing", "Scene_Ending Night", "Scene_Title" };
     }
 
-    // ���� �� �ε� ��û
+    // 씬 전환 호출
     public void LoadSceneCall()
     {
         //ȭ�� ���� ���� (���̵� �ƿ�)
         UIManager.instance.ScreenFade(1);
     }
 
-    // ���� �Ϸ� �� ȣ��Ǵ� �ݹ� �Լ�
+    // UI fade out call back
     public void FadeCallback()
     {
         // ���� �� �ε� �ڷ�ƾ ����
         StartCoroutine(LoadNextScene());
     }
 
-    // �ε� �� �񵿱� ����
+    // load scene - async
     private IEnumerator LoadNextScene()
     {
         if (currentSceneIndex < scenesToLoad.Length)
         {
-            currentSceneIndex++;  // ���� �� �ε����� ����
-            string sceneName = scenesToLoad[currentSceneIndex]; // ���� �� �̸� ��������
+            currentSceneIndex++;  // Scene index increase
+            string sceneName = scenesToLoad[currentSceneIndex]; // load scene name
             
 
-            Debug.Log("���ӸŴ��� - �ε�� ���� ��: " + sceneName);
-
-            // �񵿱������� �� �ε�
+            // async load  scene
             AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
-            Debug.Log("�񵿱� �� �ε� ����: " + sceneName);
+            Debug.Log("Now Scene: " + sceneName);
 
-            // �� �ε��� �Ϸ�� ������ ���
+            // wait for done
             while (!asyncLoad.isDone)
             {
                 yield return null;
             }
 
-            Debug.Log("�񵿱� �� �ε� �Ϸ�: " + sceneName);
+            Debug.Log("Now Scene: " + sceneName);
 
-            // �� �ε� ��, �߰����� ���� ����
-            if (sceneName == "Scene_Lobby")
-            {
-                // �κ�� ���� ����� ó��
-                // AudioManager.instance.PlayBgm(AudioManager.BGM.BGM_Lobby);
-            }
-            else
-            {
-                // �ٸ� ���� ���� ����� ó��
-                // ��: Ÿ�̸� Ȱ��ȭ, UI ���� ��
-            }
 
-            // ȭ�� ���� ���� (���̵� �ƿ�)
+            /*
+             * if you want to control each Scene, code in here 
+             */
+
+            // init this scene 
+            UIManager.instance.InitUI();
+
+
+            // fade out 
             UIManager.instance.ScreenFade(0);
         }
         else
         {
-            Debug.LogWarning("���簡 ������ ���Դϴ�.");
+            Debug.Log("No more scenes to load");
         }
     }
 
