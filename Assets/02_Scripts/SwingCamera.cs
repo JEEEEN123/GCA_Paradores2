@@ -38,7 +38,7 @@ public class SwingCamera : MonoBehaviour
         }
 
         isSwinging = true;
-        //swingSound.Play(); // 음향 효과 재생
+        swingSound.Play(); // 음향 효과 재생
         swingCoroutine = StartCoroutine(SwingForDuration(swingDuration));
     }
 
