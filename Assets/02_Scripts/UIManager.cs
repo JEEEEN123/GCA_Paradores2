@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
-//using UnityEngine.SceneManagement; // ¾À ¸Å´ÏÁö¸ÕÆ® 
+//using UnityEngine.SceneManagement; // ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½Æ® 
 
 public class UIManager : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
 
     void Awake() // SingleTon
     {
-        // ÀÌ¹Ì ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ¸é¼­ ÀÌ°Ô ¾Æ´Ï¸é ÆÄ±« ¹İÈ¯
+        // ï¿½Ì¹ï¿½ ï¿½Î½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸é¼­ ï¿½Ì°ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½Ä±ï¿½ ï¿½ï¿½È¯
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -28,46 +28,55 @@ public class UIManager : MonoBehaviour
     [Header("Fade")]
 
     [SerializeField]
-    private float fadeDuration; // ¾ÏÀü ½Ã°£ 
-    private Image fadeImg; // ¾ÏÀü È­¸é 
+    private float fadeDuration; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ 
+    [SerializeField]
+    private Image fadeImg; // ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ 
 
     [Header("Pop up")]
+    [SerializeField]
     private GameObject popupPanel;
     private Text contentText;
 
-    // °¢ ¾À¸¶´Ù ¿©·¯ ¾È³»¹®À» ÀúÀåÇÏ´Â ÀÌÁß ¸®½ºÆ®
+    // ê° ì”¬ë§ˆë‹¤ ì—¬ëŸ¬ ì•ˆë‚´ë¬¸ì„ ì €ì¥í•˜ëŠ” ì´ì¤‘ ë¦¬ìŠ¤íŠ¸
     private List<List<string>> scenePopupMessages = new List<List<string>>()
     {
-        // Scene 0
-        new List<string>() { "Senor(Senora), \n\n È£ÅÚ ÆÄ¶óµµ¸£¿¡ ¿À½Å °ÍÀ» Áø½ÉÀ¸·Î È¯¿µÇÕ´Ï´Ù. \n\n ÀÌ°÷Àº ÀÏ»ó¿¡¼­ ¹ş¾î³ª, \n Æò¿ÂÇÑ ½Ã°£À» º¸³¾ ¼ö ÀÖ´Â °÷ÀÔ´Ï´Ù.",
-            "¿À´ÃÀº ´ç½ÅÀ» À§ÇØ Æ¯º°ÇÑ Èú¸µ ÆĞÅ°Áö¸¦ ÁØºñÇß½À´Ï´Ù. \n\n ÀÚ¿¬ ¼Ó¿¡¼­ ¿©À¯¸¦ Ã£°í, ÀçÃæÀüÇÒ ¼ö ÀÖ´Â ½Ã°£À» °¡Áö¼¼¿ä.",
-            "Â÷ºĞÈ÷ ¼ûÀ» °í¸£½Ã°í, \n½ÃÀÛÇÒ ÁØºñ°¡ µÇ½Ã¸é \n ¹Ù´ÚÀÇ ¹İÂ¦ÀÌ´Â Ç¥½Ã·Î ÀÌµ¿ÇØÁÖ¼¼¿ä." },   
+        // Scene 0 title
+        new List<string>() { "Senor(Senora), \n\n í˜¸í…” íŒŒë¼ë„ë¥´ì— ì˜¤ì‹  ê²ƒì„ ì§„ì‹¬ìœ¼ë¡œ í™˜ì˜í•©ë‹ˆë‹¤. \n\n ì´ê³³ì€ ì¼ìƒì—ì„œ ë²—ì–´ë‚˜, \n í‰ì˜¨í•œ ì‹œê°„ì„ ë³´ë‚¼ ìˆ˜ ìˆëŠ” ê³³ì…ë‹ˆë‹¤.",
+            "ì˜¤ëŠ˜ì€ ë‹¹ì‹ ì„ ìœ„í•´ íŠ¹ë³„í•œ íë§ íŒ¨í‚¤ì§€ë¥¼ ì¤€ë¹„í–ˆìŠµë‹ˆë‹¤. \n\n ìì—° ì†ì—ì„œ ì—¬ìœ ë¥¼ ì°¾ê³ , ì¬ì¶©ì „í•  ìˆ˜ ìˆëŠ” ì‹œê°„ì„ ê°€ì§€ì„¸ìš”.",
+            "ì°¨ë¶„íˆ ìˆ¨ì„ ê³ ë¥´ì‹œê³ , \nì‹œì‘í•  ì¤€ë¹„ê°€ ë˜ì‹œë©´ \n ë°”ë‹¥ì˜ ë°˜ì§ì´ëŠ” í‘œì‹œë¡œ ì´ë™í•´ì£¼ì„¸ìš”." },   
+
+        // Scene 1 Lobby
+        new List<string>() { "Senor(Senora), \n\n í˜¸í…” íŒŒë¼ë„ë¥´ì— ì˜¤ì‹  ê²ƒì„ ì§„ì‹¬ìœ¼ë¡œ í™˜ì˜í•©ë‹ˆë‹¤. \n\n ì´ê³³ì€ ì¼ìƒì—ì„œ ë²—ì–´ë‚˜, \n í‰ì˜¨í•œ ì‹œê°„ì„ ë³´ë‚¼ ìˆ˜ ìˆëŠ” ê³³ì…ë‹ˆë‹¤.",
+            "ì˜¤ëŠ˜ì€ ë‹¹ì‹ ì„ ìœ„í•´ íŠ¹ë³„í•œ íë§ íŒ¨í‚¤ì§€ë¥¼ ì¤€ë¹„í–ˆìŠµë‹ˆë‹¤. \n\n ìì—° ì†ì—ì„œ ì—¬ìœ ë¥¼ ì°¾ê³ , ì¬ì¶©ì „í•  ìˆ˜ ìˆëŠ” ì‹œê°„ì„ ê°€ì§€ì„¸ìš”.",
+            "ì°¨ë¶„íˆ ìˆ¨ì„ ê³ ë¥´ì‹œê³ , \nì‹œì‘í•  ì¤€ë¹„ê°€ ë˜ì‹œë©´ \n ë°”ë‹¥ì˜ ë°˜ì§ì´ëŠ” í‘œì‹œë¡œ ì´ë™í•´ì£¼ì„¸ìš”." },   
         
-        // Scene 1
-        new List<string>() { "ÀÌ°÷Àº ÀÚ¿¬°ú ÇÔ²²ÇÒ ¼ö ÀÖ´Â ¾ß¿ÜÁ¤¿øÀÔ´Ï´Ù. \nÁ¤¿ø¿¡´Â ¼¼ °¡Áö Ã¼ÇèÀÌ ÁØºñµÇ¾î ÀÖ½À´Ï´Ù.",
-            "È£¼ı°¡¿¡¼­ ¹è Å¸±â, Çà¿îÀÇ ºĞ¼ö¿¡ µ¿Àü ´øÁö±â, \n±×¸®°í ±×³× Å¸±â. ¸ğµÎ ÃµÃµÈ÷ °æÇèÇØ º¸½Ã¸é ÁÁ°Ú½À´Ï´Ù." },
+        /*
+        // Scene 2 garden
+        new List<string>() { "ì´ê³³ì€ ìì—°ê³¼ í•¨ê»˜í•  ìˆ˜ ìˆëŠ” ì•¼ì™¸ì •ì›ì…ë‹ˆë‹¤. \nì •ì›ì—ëŠ” ì„¸ ê°€ì§€ ì²´í—˜ì´ ì¤€ë¹„ë˜ì–´ ìˆìŠµë‹ˆë‹¤.",
+            "í˜¸ìˆ«ê°€ì—ì„œ ë°° íƒ€ê¸°, í–‰ìš´ì˜ ë¶„ìˆ˜ì— ë™ì „ ë˜ì§€ê¸°, \nê·¸ë¦¬ê³  ê·¸ë„¤ íƒ€ê¸°. ëª¨ë‘ ì²œì²œíˆ ê²½í—˜í•´ ë³´ì‹œë©´ ì¢‹ê² ìŠµë‹ˆë‹¤." },
+        */
 
         // Scene 2
-        new List<string>() { "¸ÕÀú, È£¼ı°¡¿¡¼­ ¹è¸¦ Å¸°í ¿©À¯·Ó°Ô Áñ°Üº¸¼¼¿ä.\n ³ë¸¦ ÀúÀ¸¸ç È£¼öÀÇ °í¿äÇÔÀ» ´À²¸º¸½Ã±æ ¹Ù¶ø´Ï´Ù.",
-            "ÆÈÀ» ÁÂ¿ì·Î Èçµé¾î ¹è¸¦ Á¶Á¤ÇÒ ¼ö ÀÖ½À´Ï´Ù.\n ³ë¸¦ ÀúÀ¸¸ç È£¼öÀÇ °í¿äÇÔÀ» ´À²¸º¸½Ã±æ ¹Ù¶ø´Ï´Ù.",
-            "´ÙÀ½ ¸ñÀûÁöÀÎ ºĞ¼ö´ë¸¦ ÇâÇØ ³ë¸¦ Àú¾îº¸¼¼¿ä." },  
+        new List<string>() { "ë¨¼ì €, í˜¸ìˆ«ê°€ì—ì„œ ë°°ë¥¼ íƒ€ê³  ì—¬ìœ ë¡­ê²Œ ì¦ê²¨ë³´ì„¸ìš”.\n ë…¸ë¥¼ ì €ìœ¼ë©° í˜¸ìˆ˜ì˜ ê³ ìš”í•¨ì„ ëŠê»´ë³´ì‹œê¸¸ ë°”ëë‹ˆë‹¤.",
+            "íŒ”ì„ ì¢Œìš°ë¡œ í”ë“¤ì–´ ë°°ë¥¼ ì¡°ì •í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.\n ë…¸ë¥¼ ì €ìœ¼ë©° í˜¸ìˆ˜ì˜ ê³ ìš”í•¨ì„ ëŠê»´ë³´ì‹œê¸¸ ë°”ëë‹ˆë‹¤.",
+            "ë‹¤ìŒ ëª©ì ì§€ì¸ ë¶„ìˆ˜ëŒ€ë¥¼ í–¥í•´ ë…¸ë¥¼ ì €ì–´ë³´ì„¸ìš”." },  
 
         // Scene 3
-        new List<string>() { "ÀÌ°÷Àº ÆÄ¶óµµ¸£ÀÇ Çà¿îÀÇ ºĞ¼öÀÔ´Ï´Ù.\n ºĞ¼öÀÇ Áß¾ÓÀ» ÇâÇØ µ¿ÀüÀ» ´øÁ®º¸¼¼¿ä.",
-            "Çà¿îÀÇ ½ÅÀÌ ¹Ì¼Ò Áş´Â ¼ø°£,\n Æ¯º°ÇÑ ÀÏÀÌ ÀÏ¾î³¯Áöµµ ¸ğ¸¨´Ï´Ù." },  
+        new List<string>() { "ì´ê³³ì€ íŒŒë¼ë„ë¥´ì˜ í–‰ìš´ì˜ ë¶„ìˆ˜ì…ë‹ˆë‹¤.\n ë¶„ìˆ˜ì˜ ì¤‘ì•™ì„ í–¥í•´ ë™ì „ì„ ë˜ì ¸ë³´ì„¸ìš”.",
+            "í–‰ìš´ì˜ ì‹ ì´ ë¯¸ì†Œ ì§“ëŠ” ìˆœê°„,\n íŠ¹ë³„í•œ ì¼ì´ ì¼ì–´ë‚ ì§€ë„ ëª¨ë¦…ë‹ˆë‹¤." },  
 
         // Scene 4
-        new List<string>() { "¿©·¯°¡Áö Ã¼ÇèÀ» Áñ±â´À¶ó ½Ã°£ÀÌ ²Ï Èê·¯ ¹ãÀÌ µÇ¾ú±º¿ä.",
-            "¸¶Áö¸·À¸·Î ÀúÈñ È£ÅÚÀÇ ÀÚ¶ûÀÎ ±×³×¸¦ Å¸¸ç, \nÀÌ °í¿äÇÔÀ» ¸¶À½²¯ ´À²¸º¸¼¼¿ä. \nÀÌ ¼ø°£ÀÌ Æí¾ÈÇÑ ÈŞ½ÄÀÌ µÇ±â¸¦ ¹Ù¶ø´Ï´Ù.",
-            "ÄÁÆ®·Ñ·¯¸¦ Á¶Á¤ÇØ ±×³× ±ÙÃ³·Î ´Ù°¡°¡¼¼¿ä." },  
+        new List<string>() { "ì—¬ëŸ¬ê°€ì§€ ì²´í—˜ì„ ì¦ê¸°ëŠë¼ ì‹œê°„ì´ ê½¤ í˜ëŸ¬ ë°¤ì´ ë˜ì—ˆêµ°ìš”.",
+            "ë§ˆì§€ë§‰ìœ¼ë¡œ ì €í¬ í˜¸í…”ì˜ ìë‘ì¸ ê·¸ë„¤ë¥¼ íƒ€ë©°, \nì´ ê³ ìš”í•¨ì„ ë§ˆìŒê» ëŠê»´ë³´ì„¸ìš”. \nì´ ìˆœê°„ì´ í¸ì•ˆí•œ íœ´ì‹ì´ ë˜ê¸°ë¥¼ ë°”ëë‹ˆë‹¤.",
+            "ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ì¡°ì •í•´ ê·¸ë„¤ ê·¼ì²˜ë¡œ ë‹¤ê°€ê°€ì„¸ìš”." },  
 
          // Scene 5
-        new List<string>() { "¸ğµç Ã¼ÇèÀ» ¸¶Ä¡°í ·Îºñ·Î µ¹¾Æ¿À¼Ì½À´Ï´Ù. \n¹ãÀÌ ³»·Á¾ÉÀº ·Îºñ°¡ ¶Ç ´Ù¸¥ ¾Æ¸§´Ù¿òÀ» ¼±»çÇÏ´Â±º¿ä.",
-            "¿À´Ã ÇÏ·ç ÀúÈñ¿Í ÇÔ²²ÇØÁÖ¼Å¼­ °¨»çµå¸³´Ï´Ù. \nÀÌ Æ¯º°ÇÑ ½Ã°£ÀÌ ´ç½Å¿¡°Ô ÆòÈ­¿Í ¾È½ÄÀ» ÁÖ¾ú±â¸¦ ¹Ù¶ø´Ï´Ù.",
-            "¾ğÁ¦µçÁö ´Ù½Ã ¹æ¹®ÇØÁÖ½Ã±æ ¹Ù¶ó¸ç Buenas noches, ÆòÈ­·Î¿î ¹ã µÇ¼¼¿ä." }, 
+        new List<string>() { "ëª¨ë“  ì²´í—˜ì„ ë§ˆì¹˜ê³  ë¡œë¹„ë¡œ ëŒì•„ì˜¤ì…¨ìŠµë‹ˆë‹¤. \në°¤ì´ ë‚´ë ¤ì•‰ì€ ë¡œë¹„ê°€ ë˜ ë‹¤ë¥¸ ì•„ë¦„ë‹¤ì›€ì„ ì„ ì‚¬í•˜ëŠ”êµ°ìš”.",
+            "ì˜¤ëŠ˜ í•˜ë£¨ ì €í¬ì™€ í•¨ê»˜í•´ì£¼ì…”ì„œ ê°ì‚¬ë“œë¦½ë‹ˆë‹¤. \nì´ íŠ¹ë³„í•œ ì‹œê°„ì´ ë‹¹ì‹ ì—ê²Œ í‰í™”ì™€ ì•ˆì‹ì„ ì£¼ì—ˆê¸°ë¥¼ ë°”ëë‹ˆë‹¤.",
+            "ì–¸ì œë“ ì§€ ë‹¤ì‹œ ë°©ë¬¸í•´ì£¼ì‹œê¸¸ ë°”ë¼ë©° Buenas noches, í‰í™”ë¡œìš´ ë°¤ ë˜ì„¸ìš”." }, 
 
          // Scene 6
-        new List<string>() { "Scene 6: Thank you for experiencing.", "See you again!" }  
+        new List<string>() { "Scene 6: Thank you for experiencing.", "See you again!" }
     };
 
     private int popupIndex = 0;
@@ -75,42 +84,44 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        InitUI();
+        fadeImg = GameObject.FindWithTag("VRUIBackground").transform.Find("FadeImg").GetComponent<Image>();
     }
 
     public void InitUI()
     {
         int sceneIndex = GameManager.Instance.currentSceneIndex;
 
-        fadeImg = GameObject.FindWithTag("VRUIBackground").transform.GetChild(0).GetComponent<Image>();
+        fadeImg = GameObject.FindWithTag("VRUIBackground").transform.Find("FadeImg").GetComponent<Image>();
+
         popupPanel = GameObject.FindWithTag("VRUIBackground").transform.GetChild(1).gameObject;
+
         if(popupPanel != null )
         {
             contentText = popupPanel.transform.GetChild(0).GetComponent<Text>();
         }
         else
         {
-            Debug.Log("popup ÆĞ³Î ¸øÃ£À½");
+            Debug.Log("popup ï¿½Ğ³ï¿½ ï¿½ï¿½Ã£ï¿½ï¿½");
         }
 
         ShowFirstPopup();
 
     }
 
-    // ÆË¾÷À» ¶ç¿ì±â À§ÇÑ ¸Ş¼­µå
+    // ï¿½Ë¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ï¿½ï¿½
     public void ShowFirstPopup()
     {
         // show popup UI for current scene 
         if (popupIndex < scenePopupMessages[GameManager.Instance.currentSceneIndex].Count)
         {
-            // ¿¹: UIManager¸¦ ÅëÇØ ÅØ½ºÆ®¸¦ ÆË¾÷¿¡ Ç¥½Ã
+            // ï¿½ï¿½: UIManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ®ï¿½ï¿½ ï¿½Ë¾ï¿½ï¿½ï¿½ Ç¥ï¿½ï¿½
             ShowPopup(scenePopupMessages[GameManager.Instance.currentSceneIndex][popupIndex]);
             Debug.Log(popupIndex);
             popupIndex++;
         }
         else
         {
-            // ³»¿ëÀ» ¸ğµÎ º¸¿©ÁÖ¾ú´Ù¸é ²¨Áø´Ù
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¾ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             ClosePopup();
 
             // init this 
@@ -119,15 +130,15 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // È­¸é ¾ÏÀü
+    // È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void ScreenFade(int set)
     {
-        // ´åÆ®À© »ç¿ëÇÏ´Â fade 
+        // ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ fade 
         var sequence = DOTween.Sequence();
 
         if (set == 1)
         {
-            // ¾ÏÀü 
+            // ï¿½ï¿½ï¿½ï¿½ 
             sequence.Append(fadeImg.DOFade(1, fadeDuration));
 
             sequence.AppendCallback(() => {
@@ -137,7 +148,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            // ¾ÏÀü ÇØÁ¦ 
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
             sequence.Append(fadeImg.DOFade(0, fadeDuration));
         }
 
@@ -145,19 +156,19 @@ public class UIManager : MonoBehaviour
 
     }
 
-    // popup Ã¢ ¶ç¿ì±â
+    // popup Ã¢ ï¿½ï¿½ï¿½ï¿½
     public void ShowPopup(string newContextText)
     {
         if (popupPanel != null)
         {
             popupPanel.SetActive(true);
-            Debug.Log("ÆË¾÷ ¶ç¿ì±â");
+            Debug.Log("ï¿½Ë¾ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
             contentText.text = newContextText;
         }
         else
         {
-            Debug.Log("ÆË¾÷ ÆĞ³ÎÀ» Ã£À» ¼ö ¾øÀ½ ");
+            Debug.Log("ï¿½Ë¾ï¿½ ï¿½Ğ³ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ");
 
         }
     }
@@ -167,13 +178,13 @@ public class UIManager : MonoBehaviour
         if (popupPanel != null)
         {
             popupPanel.SetActive(false);
-            Debug.Log("ÆË¾÷ ²ô±â");
+            Debug.Log("ï¿½Ë¾ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
 
         }
         else
         {
-            Debug.Log("ÆË¾÷ ÆĞ³ÎÀ» Ã£À» ¼ö ¾øÀ½ ");
+            Debug.Log("ï¿½Ë¾ï¿½ ï¿½Ğ³ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ");
 
 
         }
