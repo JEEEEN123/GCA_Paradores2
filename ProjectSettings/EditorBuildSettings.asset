@@ -14,10 +14,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01_Scenes/Scene_Lobby.unity
     guid: 5c0214e42d944bf4a9abceecbb0bb8c0
+  - enabled: 0
+    path: Assets/01_Scenes/Scene_Fountain.unity
+    guid: 6ae5122bb0ffb5c479fa921b1fec2eac
   - enabled: 1
     path: Assets/01_Scenes/Scene_Swing.unity
     guid: 7dc1e4d91fb15e247b52ac6c4717d336
   - enabled: 1
+    path: Assets/01_Scenes/Scene_Ending Night.unity
+    guid: 91adfd0e2c55c884aa048c03ad383d76
+  - enabled: 0
     path: Assets/01_Scenes/Scene_Test.unity
     guid: 7bdc8751b7619ff41aa9066190a0f2fb
   m_configObjects:
