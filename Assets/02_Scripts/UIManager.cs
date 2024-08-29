@@ -101,8 +101,40 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("popup �г� ��ã��");
+            Debug.Log("no popup here");
         }
+
+        // buttons linking 
+        AssignButtonEvents();
+
+        ShowFirstPopup();
+
+    }
+
+    void AssignButtonEvents()
+    {
+        // PopupPanel의 자식들을 탐색하여 버튼을 찾음
+        Transform buttonTransform = popupPanel.transform.GetChild(1).GetChild(0); // 1번 자식(Buttons)의 0번 자식(ButtonNext)을 가져옴
+
+        if (buttonTransform != null)
+        {
+            Button button = buttonTransform.GetComponent<Button>();
+            if (button != null)
+            {
+                button.onClick.RemoveAllListeners(); // 기존 이벤트 리스너 제거
+                button.onClick.AddListener(OnButtonNextClicked); // 새 이벤트 리스너 추가
+            }
+        }
+        else
+        {
+            Debug.LogError("Button not found!");
+        }
+    }
+
+    void OnButtonNextClicked()
+    {
+        Debug.Log("Button Next Clicked!");
+        // 여기에 버튼 클릭 시 수행할 작업을 추가하세요.
 
         ShowFirstPopup();
 
@@ -162,13 +194,13 @@ public class UIManager : MonoBehaviour
         if (popupPanel != null)
         {
             popupPanel.SetActive(true);
-            Debug.Log("�˾� ����");
+            Debug.Log(" show popup ");
 
             contentText.text = newContextText;
         }
         else
         {
-            Debug.Log("�˾� �г��� ã�� �� ���� ");
+            Debug.Log("no popup here");
 
         }
     }
@@ -178,13 +210,13 @@ public class UIManager : MonoBehaviour
         if (popupPanel != null)
         {
             popupPanel.SetActive(false);
-            Debug.Log("�˾� ����");
+            Debug.Log(" close popup");
 
 
         }
         else
         {
-            Debug.Log("�˾� �г��� ã�� �� ���� ");
+            Debug.Log("no popup here ");
 
 
         }
