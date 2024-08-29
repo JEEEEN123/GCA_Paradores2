@@ -6,12 +6,12 @@ public class ShipMove : MonoBehaviour
 {
     void Update()
     {
-        Move();     //ÒÆ¶¯
-        Shake();    //Ò¡°Ú
+        Move();     
+        Shake();    //Ò¡ï¿½ï¿½
     }
 
-    float Speed = 5.0f; //ÒÆ¶¯ËÙ¶È
-    float RotateSpeed = 5;   //Ðý×ªËÙ¶È
+    float Speed = 2.0f; //ï¿½Æ¶ï¿½ï¿½Ù¶ï¿½
+    float RotateSpeed = 2;   //ï¿½ï¿½×ªï¿½Ù¶ï¿½
     void Move()
     {
         float move_x = Input.GetAxis("Horizontal");
@@ -35,7 +35,7 @@ public class ShipMove : MonoBehaviour
         //    transform.Translate(-Speed * Time.deltaTime, 0, 0);
         //}
 
-        // ´¬µÄ×ªÏò  
+        // ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½  
         if (move_y > 0.5f)
         {
             if (move_x > 0.5f)
@@ -50,13 +50,13 @@ public class ShipMove : MonoBehaviour
     }
 
 
-    // ÈÆZÖáµÄÒ¡°ÚµÄËÙ¶È
+    // ï¿½ï¿½Zï¿½ï¿½ï¿½Ò¡ï¿½Úµï¿½ï¿½Ù¶ï¿½
     float z_ShakeSpeed = 3.0f;
-    // ÈÆXÖáµÄÒ¡°ÚµÄËÙ¶È
+    // ï¿½ï¿½Xï¿½ï¿½ï¿½Ò¡ï¿½Úµï¿½ï¿½Ù¶ï¿½
     float x_ShakeSpeed = 1.0f;
     void Shake()
     {
-        // ÈÆZÖáÒ¡»Î  
+        // ï¿½ï¿½Zï¿½ï¿½Ò¡ï¿½ï¿½  
         if (transform.eulerAngles.z >= 4 && transform.eulerAngles.z <= 180)
         {
             z_ShakeSpeed = -z_ShakeSpeed;
@@ -66,7 +66,7 @@ public class ShipMove : MonoBehaviour
             z_ShakeSpeed = -z_ShakeSpeed;
         }
 
-        // ÈÆXÖáÒ¡»Î  
+        // ï¿½ï¿½Xï¿½ï¿½Ò¡ï¿½ï¿½  
         if (transform.eulerAngles.x >= 4 && transform.eulerAngles.x <= 180)
         {
             x_ShakeSpeed = -x_ShakeSpeed;
