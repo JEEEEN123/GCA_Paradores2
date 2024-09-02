@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
             "호숫가에서 배 타기, 행운의 분수에 동전 던지기, \n그리고 그네 타기. 모두 천천히 경험해 보시면 좋겠습니다." },   
 
         // Scene 2
-        new List<string>() { "." },  
+        new List<string>() { "" },  
 
         // Scene 3
         new List<string>() { "Buena suerte! \n 행운의 요정이 나타나 \n 당신에게 특별한 축복을 내립니다.",
@@ -176,7 +176,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    // �˾��� ���� ���� �޼���
+    // show pop up message 
     public void ShowFirstPopup()
     {
         if (!isStageEnd)
@@ -207,14 +207,14 @@ public class UIManager : MonoBehaviour
             // show popup UI for current scene 
             if (popupIndex < sceneEndingPopupMessages[GameManager.Instance.currentSceneIndex].Count)
             {
-                // ��: UIManager�� ���� �ؽ�Ʈ�� �˾��� ǥ��
+                // UI Manager 
                 ShowPopup(sceneEndingPopupMessages[GameManager.Instance.currentSceneIndex][popupIndex]);
-                Debug.Log("ending message");
+                Debug.Log("ending message: "+ popupIndex);
                 popupIndex++;
             }
             else
             {
-                // ������ ��� �����־��ٸ� ������
+                // close pop up and load next Scene 
                 ClosePopup();
 
                 // init this 

@@ -2,22 +2,15 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class Fairy : MonoBehaviour
 {
     [SerializeField]private Animator anim;
-    private string[] endingTexts;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
-
-        endingTexts = new string[2];
-        endingTexts[0] = "Buena suerte! \n 행운의 요정이 나타나 \n 당신에게 특별한 축복을 내립니다.";
-        endingTexts[1] = "은총이 당신의 발걸음을 가볍게 하고, \n 모든 길을 환하게 비출 것입니다";
-
 
     }
 
@@ -60,6 +53,6 @@ public class Fairy : MonoBehaviour
 
 
         // popup 띄우기 
-        UIManager.instance.ShowPopup(endingTexts[0]);
+        UIManager.instance.ShowFirstPopup();
     }
 }
