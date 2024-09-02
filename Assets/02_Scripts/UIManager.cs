@@ -85,6 +85,12 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         fadeImg = GameObject.FindWithTag("VRUIBackground").transform.Find("FadeImg").GetComponent<Image>();
+
+        // title 씬을 제외하고는 
+        if(GameManager.Instance.currentSceneIndex != 0)
+        {
+            InitUI();
+        }
     }
 
     public void InitUI()

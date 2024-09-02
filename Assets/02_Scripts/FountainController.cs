@@ -5,6 +5,7 @@ using UnityEngine;
 public class FountainController : MonoBehaviour
 {
     private AudioSource sfx_coin;
+    [SerializeField] private Fairy fairy;
 
     private void Start()
     {
@@ -13,17 +14,20 @@ public class FountainController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // ´êÀº°Ô Coin ÀÌ¶ó¸é 
+        // ë‹¿ì€ê²Œ Coin ì´ë¼ë©´ 
         if(other.CompareTag("COIN"))
         {
             Debug.Log("coin~");
 
             sfx_coin.Play();
 
-            // µ¿ÀüÀÌ ´êÀ¸¸é Á¦°Å
+            // ë™ì „ì´ ë‹¿ìœ¼ë©´ ì œê±°
             Destroy(other.gameObject);
+
+            // ë™ì „ì´ ê³¨ì¸í–ˆì„ ë•Œ Fairy ë“±ì¥
+            fairy.OnCoinGoal();
         }
 
-        
     }
+
 }
