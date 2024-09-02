@@ -221,6 +221,9 @@ public class UIManager : MonoBehaviour
                 popupIndex = 0;
                 isStageEnd = false;
 
+                // 다음씬 ㄱㄱ 
+                GameManager.Instance.LoadSceneCall();
+
             }
 
 
