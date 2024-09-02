@@ -72,12 +72,8 @@ public class UIManager : MonoBehaviour
             "컨트롤러를 조정해 그네 근처로 다가가세요." },  
 
          // Scene 5
-        new List<string>() { "모든 체험을 마치고 로비로 돌아오셨습니다. \n밤이 내려앉은 로비가 또 다른 아름다움을 선사하는군요.",
-            "오늘 하루 저희와 함께해주셔서 감사드립니다. \n이 특별한 시간이 당신에게 평화와 안식을 주었기를 바랍니다.",
-            "언제든지 다시 방문해주시길 바라며 Buenas noches, 평화로운 밤 되세요." }, 
+        new List<string>() { "모든 체험을 마치고 로비로 돌아오셨습니다. \n밤이 내려앉은 로비가 또 다른 아름다움을 선사하는군요." }, 
 
-         // Scene 6
-        new List<string>() { "Scene 6: Thank you for experiencing.", "See you again!" }
     };
 
 
@@ -104,7 +100,8 @@ public class UIManager : MonoBehaviour
         new List<string>() { " "},  
 
          // Scene 5
-        new List<string>() { "" }, 
+        new List<string>() { "오늘 하루 저희와 함께해주셔서 감사드립니다. \n이 특별한 시간이 당신에게 평화와 안식을 주었기를 바랍니다.",
+            "언제든지 다시 방문해주시길 바라며 Buenas noches, 평화로운 밤 되세요." }, 
 
          // Scene 6
         new List<string>() { "" }
