@@ -8,6 +8,7 @@ public class BoatArrive : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            
             GameManager.Instance.LoadSceneCall();
 
         }

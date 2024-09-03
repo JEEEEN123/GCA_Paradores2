@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/01_Scenes/Scene_Test.unity
     guid: 7bdc8751b7619ff41aa9066190a0f2fb
+  - enabled: 1
+    path: Assets/01_Scenes/Scene_BoatMove2.unity
+    guid: dbb6af6db03bbfd4e8c5845ded27d682
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: e9c655f4bcf22bf4195bebe24a49a00b,
       type: 2}

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class CanvasFollower : MonoBehaviour
 {
-    private Transform playerCamera;  // Ä«¸Ş¶óÀÇ Transform
+    private Transform playerCamera;  // ì¹´ë©”ë¼ì˜ Transform
 
-    public float distanceFromCamera = 2.0f;  // Ä«¸Ş¶ó·ÎºÎÅÍÀÇ °Å¸®
-    public float lerpSpeed = 5.0f;  // ÆĞ³ÎÀÌ ÀÌµ¿ÇÏ´Â ¼Óµµ
+    public float distanceFromCamera = 2.0f;  // ì¹´ë©”ë¼ë¡œë¶€í„°ì˜ ê±°ë¦¬
+    public float lerpSpeed = 5.0f;  // íŒ¨ë„ì´ ì´ë™í•˜ëŠ” ì†ë„
 
-    // Start is called before the first frame update
+    public Transform fadeImgTransform; // FadeImgì˜ Transform
+    public Transform popupPanelTransform; // PopupPanelì˜ Transform
+
     void Start()
     {
-        // Main Camera ÅÂ±×·Î Ä«¸Ş¶ó Ã£±â
+        // Main Camera íƒœê·¸ë¡œ ì¹´ë©”ë¼ ì°¾ê¸°
         GameObject cameraObject = GameObject.FindWithTag("MainCamera");
 
         if (cameraObject != null)
@@ -21,26 +23,31 @@ public class CanvasFollower : MonoBehaviour
         }
         else
         {
-            Debug.LogError("MainCamera¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. VR Ä«¸Ş¶ó°¡ Á¦´ë·Î ¼³Á¤µÇ¾î ÀÖ´ÂÁö È®ÀÎÇÏ¼¼¿ä.");
+            Debug.LogError("MainCameraë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤. VR ì¹´ë©”ë¼ê°€ ì œëŒ€ë¡œ ì„¤ì •ë˜ì–´ ìˆëŠ”ì§€ í™•ì¸í•˜ì„¸ìš”.");
         }
+
+        fadeImgTransform = transform.GetChild(0);
+        popupPanelTransform = transform.GetChild(1);    
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playerCamera != null)
         {
-            // ¸ñÇ¥ À§Ä¡ °è»ê (Ä«¸Ş¶ó ¾Õ)
+            // FadeImgì™€ Canvas_world ì¦‰ê° ì´ë™
             Vector3 targetPosition = playerCamera.position + playerCamera.forward * distanceFromCamera;
-
-            // ÇöÀç À§Ä¡¿¡¼­ ¸ñÇ¥ À§Ä¡·Î ºÎµå·´°Ô ÀÌµ¿
-            //transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * lerpSpeed);
+            fadeImgTransform.position = targetPosition;
             transform.position = targetPosition;
 
+            // FadeImgëŠ” ì¦‰ê°ì ìœ¼ë¡œ ì¹´ë©”ë¼ ë”°ë¼ê°€ê²Œ ì„¤ì •
+            fadeImgTransform.LookAt(playerCamera);
+            fadeImgTransform.Rotate(0, 180, 0);  // íŒ¨ë„ì´ ë’¤ì§‘íˆì§€ ì•Šë„ë¡ 180ë„ íšŒì „
 
-            // ÆĞ³ÎÀÌ Ç×»ó Ä«¸Ş¶ó¸¦ ¹Ù¶óº¸°Ô ¼³Á¤
-            transform.LookAt(playerCamera);
-            transform.Rotate(0, 180, 0);  // ÆĞ³ÎÀÌ µÚÁıÈ÷Áö ¾Êµµ·Ï 180µµ È¸Àü
+            // PopupPanelì˜ ë¶€ë“œëŸ¬ìš´ ì´ë™
+            Vector3 popupTargetPosition = playerCamera.position + playerCamera.forward * distanceFromCamera;
+            popupPanelTransform.position = Vector3.Lerp(popupPanelTransform.position, popupTargetPosition, Time.deltaTime * lerpSpeed);
+            popupPanelTransform.LookAt(playerCamera);
+            popupPanelTransform.Rotate(0, 180, 0);  // íŒ¨ë„ì´ ë’¤ì§‘íˆì§€ ì•Šë„ë¡ 180ë„ íšŒì „
         }
     }
 }

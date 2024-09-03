@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
 
     void Awake() // SingleTon
     {
-        // ÀÌ¹Ì ÀÎ½ºÅÏ½º°¡ Á¸ÀçÇÏ¸é¼­ ÀÌ°Ô ¾Æ´Ï¸é ÆÄ±« ¹İÈ¯
+        // ì´ë¯¸ ì¸ìŠ¤í„´ìŠ¤ê°€ ì¡´ì¬í•˜ë©´ì„œ ì´ê²Œ ì•„ë‹ˆë©´ íŒŒê´´ ë°˜í™˜
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -26,19 +26,22 @@ public class AudioManager : MonoBehaviour
     public enum AudioType { BGM, SFX }
 
     [Header("BGM")]
-    public AudioClip[] bgmClips; // ¹è°æÀ½¾Ç
-    public float bgmVolume; // ¹è°æÀ½¾Ç º¼·ı
-    public AudioSource bgmPlayer; // Àç»ıÇØÁÙ ¿Àµğ¿À ¼Ò½º ÄÄÆ÷³ÍÆ® 
+    public AudioClip[] bgmClips; // ë°°ê²½ìŒì•…
+    public float bgmVolume; // ë°°ê²½ìŒì•… ë³¼ë¥¨
+    public AudioSource bgmPlayer; // ì¬ìƒí•´ì¤„ ì˜¤ë””ì˜¤ ì†ŒìŠ¤ ì»´í¬ë„ŒíŠ¸ 
 
     public enum BGM
     {
         BGM_Lobby,
-        BGM_Boat
+        BGM_Boat,
+        BGM_Fountain,
+        BGM_LobbyNight,
+        BGM_None
     }
 
     [Header("SFX")]
-    public AudioClip[] sfxClips; // È¿°úÀ½
-    public float sfxVolume; // È¿°úÀ½ º¼·ı
+    public AudioClip[] sfxClips; // íš¨ê³¼ìŒ
+    public float sfxVolume; // íš¨ê³¼ìŒ ë³¼ë¥¨
     public int channels;
     public AudioSource[] sfxPlayers;
     int channelIndex; //
@@ -53,7 +56,7 @@ public class AudioManager : MonoBehaviour
 
         // Basic actions
 
-        // µğÆúÆ®
+        // ë””í´íŠ¸
         SFX_None
     }
 
@@ -69,23 +72,23 @@ public class AudioManager : MonoBehaviour
         set => OnVolumeChanged(AudioType.SFX, value);
     }
 
-    // ÃÊ±âÈ­ 
+    // ì´ˆê¸°í™” 
     private void AudioManager_Init()
     {
-        // ¹è°æÀ½ ÇÃ·¹ÀÌ¾î ÃÊ±âÈ­
+        // ë°°ê²½ìŒ í”Œë ˆì´ì–´ ì´ˆê¸°í™”
         GameObject bgmObject = new GameObject("BGMPlayer");
         bgmObject.transform.parent = transform;
         bgmPlayer = bgmObject.AddComponent<AudioSource>();
-        bgmPlayer.playOnAwake = false;                          // °ÔÀÓ ½ÃÀÛ ½Ã Àç»ı ²ô±â
+        bgmPlayer.playOnAwake = false;                          // ê²Œì„ ì‹œì‘ ì‹œ ì¬ìƒ ë„ê¸°
         bgmPlayer.loop = true;
         bgmPlayer.volume = bgmVolume;
 
-        // ¿ë·® ÃÖÀûÈ­
+        // ìš©ëŸ‰ ìµœì í™”
         bgmPlayer.dopplerLevel = 0.0f;
         bgmPlayer.reverbZoneMix = 0.0f;
         //bgmPlayer.clip = bgmClips;
 
-        // È¿°úÀ½ ÇÃ·¹ÀÌ¾î ÃÊ±âÈ­
+        // íš¨ê³¼ìŒ í”Œë ˆì´ì–´ ì´ˆê¸°í™”
         GameObject sfxObject = new GameObject("SFXPlayer");
         sfxObject.transform.parent = transform;
         sfxPlayers = new AudioSource[channels];
@@ -99,7 +102,7 @@ public class AudioManager : MonoBehaviour
             sfxPlayers[idx].reverbZoneMix = 0.0f;
         }
 
-        bgmVolume = 1.0f - PlayerPrefs.GetFloat("BGM_Volume");           // default °ªÀÌ 0ÀÌ±â ¶§¹®¿¡ 1.0f - value·Î ÀúÀå
+        bgmVolume = 1.0f - PlayerPrefs.GetFloat("BGM_Volume");           // default ê°’ì´ 0ì´ê¸° ë•Œë¬¸ì— 1.0f - valueë¡œ ì €ì¥
         sfxVolume = 1.0f - PlayerPrefs.GetFloat("Effect_Volume");
     }
 
@@ -117,12 +120,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySfx(SFX sfx)
     {
-        // ½¬°í ÀÖ´Â ÇÏ³ªÀÇ sfxPlayer¿¡°Ô clipÀ» ÇÒ´çÇÏ°í ½ÇÇà
+        // ì‰¬ê³  ìˆëŠ” í•˜ë‚˜ì˜ sfxPlayerì—ê²Œ clipì„ í• ë‹¹í•˜ê³  ì‹¤í–‰
         for (int idx = 0; idx < sfxPlayers.Length; idx++)
         {
-            int loopIndex = (idx + channelIndex) % sfxPlayers.Length;    // Ã¤³Î °³¼ö¸¸Å­ ¼øÈ¸ÇÏµµ·Ï Ã¤³ÎÀÎµ¦½º º¯¼ö È°¿ë
+            int loopIndex = (idx + channelIndex) % sfxPlayers.Length;    // ì±„ë„ ê°œìˆ˜ë§Œí¼ ìˆœíšŒí•˜ë„ë¡ ì±„ë„ì¸ë±ìŠ¤ ë³€ìˆ˜ í™œìš©
 
-            if (sfxPlayers[loopIndex].isPlaying) continue;               // ÁøÇà ÁßÀÎ sfxPlayer´Â Âß ÁøÇà
+            if (sfxPlayers[loopIndex].isPlaying) continue;               // ì§„í–‰ ì¤‘ì¸ sfxPlayerëŠ” ì­‰ ì§„í–‰
 
             channelIndex = loopIndex;
             sfxPlayers[loopIndex].clip = sfxClips[(int)sfx];
