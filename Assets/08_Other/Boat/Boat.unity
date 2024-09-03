@@ -4577,13 +4577,7 @@ GameObject:
   - component: {fileID: 787953189}
   - component: {fileID: 784840419}
   - component: {fileID: 114669314782222485}
-  - component: {fileID: 114912875674959877}
   - component: {fileID: 114912875674959878}
-  - component: {fileID: 114865002080078589}
-  - component: {fileID: 114912875674959879}
-  - component: {fileID: 114233347659330919}
-  - component: {fileID: 114912875674959880}
-  - component: {fileID: 114912875674959881}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -5430,6 +5424,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785d14f00fe9cd845a928f7939df816f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stick: {fileID: 0}
+  stickRadius: 50
 --- !u!1 &1260119893
 GameObject:
   m_ObjectHideFlags: 0
@@ -7136,20 +7132,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114233347659330919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782738371}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: befd55f07191f484fa8b8e202637a7af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  centerOfMassOffset: {x: 0, y: -3, z: 0}
-  buoyancyMesh: {fileID: 0}
 --- !u!114 &114669314782222485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7172,32 +7154,6 @@ MonoBehaviour:
   acceleration_cst: 50
   drag: 100
   angle: 0
---- !u!114 &114865002080078589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782738371}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b086fdc6a7aaa114eb91006cf2431972, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  offset: {x: 0, y: -1.7, z: 4}
---- !u!114 &114912875674959877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782738371}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6a6361b7c228ec48a73b3451a2cde25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ship: {fileID: 114669314782222485}
 --- !u!114 &114912875674959878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7210,61 +7166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2b9b8855ab2bf043a603143cd74d8f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114912875674959879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782738371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c89d21d88b63a4f9bd1ccf1610bfd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114912875674959880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782738371}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae8ef0545cd89264bb74ccf46f00d07d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  centerOfMassOffset: {x: 0, y: -3, z: 0}
-  buoyancyMesh: {fileID: 0}
---- !u!114 &114912875674959881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 782738371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d773d47e6ecddf4982be5b25fb2a663, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  visitedAreaPolarbear: 0
-  visitedAreaNature: 0
-  visitedAreaUrban: 0
-  debugText: {fileID: 782628376}
-  seaLevelRisingMeters: 10
-  tempBreakScene: 0
-  playAudio: 1
-  playerAudioSource: {fileID: 1990585606}
-  initialClip: {fileID: 8300000, guid: e7d6e0d976b56304393f184bc305171c, type: 3}
-  enterPolarbearArea: {fileID: 8300000, guid: f14d85cdcb3950048a9438a98c3453af, type: 3}
-  exitPolarbearArea: {fileID: 8300000, guid: e98f6adf3fb3e7c44a0470197a71b764, type: 3}
-  enterNatureArea: {fileID: 8300000, guid: dd62c453bd94c46409660a677831819a, type: 3}
-  exitNatureArea: {fileID: 8300000, guid: 430d1b01c313594448c370baa25b0318, type: 3}
-  enterUrbanArea: {fileID: 8300000, guid: 2ddfc2f98be226742bc76668ede0f0f0, type: 3}
-  exitUrbanArea: {fileID: 8300000, guid: c5585f3249fa954478b76a36e4595af6, type: 3}
-  seaRiseClip: {fileID: 8300000, guid: 7e252096b2a37734c80db5e467d614c9, type: 3}
-  finishClip: {fileID: 8300000, guid: e6cb234500a72174f9721237c2a013bc, type: 3}
+  ship: {fileID: 114669314782222485}
+  inputSource: 0
 --- !u!135 &135051010945742401
 SphereCollider:
   m_ObjectHideFlags: 0
