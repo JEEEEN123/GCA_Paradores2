@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UIElements;
 
 public class LobbyCameraTrigger : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class LobbyCameraTrigger : MonoBehaviour
     private int currentWaypointIndex = 0; // 현재 웨이포인트 인덱스
     private bool isMoving = false; // 카메라가 이동 중인지 여부
 
+    public GameObject XROriginCamera;
     public GameObject playerCamera;
     private Transform cameraTransform;
 
@@ -22,14 +24,17 @@ public class LobbyCameraTrigger : MonoBehaviour
         // 충돌한 오브젝트가 카메라인지 확인
         if (other.CompareTag("MainCamera") && !isMoving)
         {
-
-            other.transform.parent.parent.gameObject.SetActive(false);
+            XROriginCamera = other.transform.parent.parent.gameObject;
+            XROriginCamera.SetActive(false);
 
             playerCamera.SetActive(true);
 
-
+            
 
             StartCoroutine(MoveAlongWaypoints());
+
+            // pop up 설정 
+            UIManager.instance.ShowFirstPopup();
         }
     }
 
@@ -37,6 +42,7 @@ public class LobbyCameraTrigger : MonoBehaviour
     {
         isMoving = true;
         
+
         while (currentWaypointIndex < waypoints.Length)
         {
             Transform targetWaypoint = waypoints[currentWaypointIndex];
@@ -59,5 +65,12 @@ public class LobbyCameraTrigger : MonoBehaviour
         }
 
         isMoving = false; // 모든 웨이포인트를 따라 이동이 완료됨
+
+        playerCamera.SetActive(false);
+
+        XROriginCamera.transform.position = new Vector3(-17f, 11.5f, -1.15f);
+        //XROriginCamera.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+
+        XROriginCamera.SetActive(true);
     }
 }

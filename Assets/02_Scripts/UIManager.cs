@@ -36,6 +36,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject popupPanel;
     private Text contentText;
+    private bool isStageEnd;
 
     // 각 씬마다 여러 안내문을 저장하는 이중 리스트
     private List<List<string>> scenePopupMessages = new List<List<string>>()
@@ -71,24 +72,55 @@ public class UIManager : MonoBehaviour
             "컨트롤러를 조정해 그네 근처로 다가가세요." },  
 
          // Scene 5
-        new List<string>() { "모든 체험을 마치고 로비로 돌아오셨습니다. \n밤이 내려앉은 로비가 또 다른 아름다움을 선사하는군요.",
-            "오늘 하루 저희와 함께해주셔서 감사드립니다. \n이 특별한 시간이 당신에게 평화와 안식을 주었기를 바랍니다.",
-            "언제든지 다시 방문해주시길 바라며 Buenas noches, 평화로운 밤 되세요." }, 
+        new List<string>() { "모든 체험을 마치고 로비로 돌아오셨습니다. \n밤이 내려앉은 로비가 또 다른 아름다움을 선사하는군요." }, 
 
-         // Scene 6
-        new List<string>() { "Scene 6: Thank you for experiencing.", "See you again!" }
     };
+
 
     private int popupIndex = 0;
 
+    // 각 씬마다 여러 안내문을 저장하는 이중 리스트
+    private List<List<string>> sceneEndingPopupMessages = new List<List<string>>()
+    {
+        // Scene 0 title
+        new List<string>() { "" },   
+
+        // Scene 1 Lobby
+        new List<string>() { "이곳은 자연과 함께할 수 있는 야외정원입니다. \n정원에는 세 가지 체험이 준비되어 있습니다.",
+            "호숫가에서 배 타기, 행운의 분수에 동전 던지기, \n그리고 그네 타기. 모두 천천히 경험해 보시면 좋겠습니다." },   
+
+        // Scene 2
+        new List<string>() { "" },  
+
+        // Scene 3
+        new List<string>() { "Buena suerte! \n 행운의 요정이 나타나 \n 당신에게 특별한 축복을 내립니다.",
+            "은총이 당신의 발걸음을 가볍게 하고, \n 모든 길을 환하게 비출 것입니다"},
+
+        // Scene 4
+        new List<string>() { " "},  
+
+         // Scene 5
+        new List<string>() { "오늘 하루 저희와 함께해주셔서 감사드립니다. \n이 특별한 시간이 당신에게 평화와 안식을 주었기를 바랍니다.",
+            "언제든지 다시 방문해주시길 바라며 Buenas noches, 평화로운 밤 되세요." }, 
+
+         // Scene 6
+        new List<string>() { "" }
+    };
 
     private void Start()
     {
         fadeImg = GameObject.FindWithTag("VRUIBackground").transform.Find("FadeImg").GetComponent<Image>();
+
+        // title 씬을 제외하고는 
+        if(GameManager.Instance.currentSceneIndex != 0)
+        {
+            InitUI();
+        }
     }
 
     public void InitUI()
     {
+        isStageEnd = false;
         int sceneIndex = GameManager.Instance.currentSceneIndex;
 
         fadeImg = GameObject.FindWithTag("VRUIBackground").transform.Find("FadeImg").GetComponent<Image>();
@@ -131,35 +163,69 @@ public class UIManager : MonoBehaviour
         }
     }
 
+
+
     void OnButtonNextClicked()
     {
         Debug.Log("Button Next Clicked!");
         // 여기에 버튼 클릭 시 수행할 작업을 추가하세요.
-
         ShowFirstPopup();
 
     }
 
-    // �˾��� ���� ���� �޼���
+    // show pop up message 
     public void ShowFirstPopup()
     {
-        // show popup UI for current scene 
-        if (popupIndex < scenePopupMessages[GameManager.Instance.currentSceneIndex].Count)
+        if (!isStageEnd)
         {
-            // ��: UIManager�� ���� �ؽ�Ʈ�� �˾��� ǥ��
-            ShowPopup(scenePopupMessages[GameManager.Instance.currentSceneIndex][popupIndex]);
-            Debug.Log(popupIndex);
-            popupIndex++;
+            // show popup UI for current scene 
+            if (popupIndex < scenePopupMessages[GameManager.Instance.currentSceneIndex].Count)
+            {
+                // ��: UIManager�� ���� �ؽ�Ʈ�� �˾��� ǥ��
+                ShowPopup(scenePopupMessages[GameManager.Instance.currentSceneIndex][popupIndex]);
+                Debug.Log("start message");
+
+                popupIndex++;
+            }
+            else
+            {
+                // ������ ��� �����־��ٸ� ������
+                ClosePopup();
+
+                // init this 
+                popupIndex = 0;
+                isStageEnd = true;
+
+            }
         }
         else
         {
-            // ������ ��� �����־��ٸ� ������
-            ClosePopup();
 
-            // init this 
-            popupIndex = 0;
+            // show popup UI for current scene 
+            if (popupIndex < sceneEndingPopupMessages[GameManager.Instance.currentSceneIndex].Count)
+            {
+                // UI Manager 
+                ShowPopup(sceneEndingPopupMessages[GameManager.Instance.currentSceneIndex][popupIndex]);
+                Debug.Log("ending message: "+ popupIndex);
+                popupIndex++;
+            }
+            else
+            {
+                // close pop up and load next Scene 
+                ClosePopup();
+
+                // init this 
+                popupIndex = 0;
+                isStageEnd = false;
+
+                // 다음씬 ㄱㄱ 
+                GameManager.Instance.LoadSceneCall();
+
+            }
+
 
         }
+        
     }
 
     // ȭ�� ����

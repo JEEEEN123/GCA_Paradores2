@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // 로드할 씬 목록 
-        scenesToLoad = new string[] { "Scene_Title", "Scene_Lobby", "Scene_boat", "Scene_Fountain", "Scene_Swing", "Scene_Ending Night", "Scene_Title" };
+        scenesToLoad = new string[] { "Scene_Title", "Scene_Lobby", "Scene_boatMove", "Scene_Fountain", "Scene_Swing", "Scene_Ending Night", "Scene_Title" };
     }
 
     // 씬 전환 호출
