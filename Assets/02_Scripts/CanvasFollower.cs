@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.UI;
 
 public class CanvasFollower : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class CanvasFollower : MonoBehaviour
 
     public Transform fadeImgTransform; // FadeImg의 Transform
     public Transform popupPanelTransform; // PopupPanel의 Transform
+
+    private TrackedDeviceGraphicRaycaster raycaster;
 
     void Start()
     {
@@ -27,7 +30,9 @@ public class CanvasFollower : MonoBehaviour
         }
 
         fadeImgTransform = transform.GetChild(0);
-        popupPanelTransform = transform.GetChild(1);    
+        popupPanelTransform = transform.GetChild(1);
+
+        raycaster = GetComponent<TrackedDeviceGraphicRaycaster>();
     }
 
     void Update()
@@ -48,6 +53,19 @@ public class CanvasFollower : MonoBehaviour
             popupPanelTransform.position = Vector3.Lerp(popupPanelTransform.position, popupTargetPosition, Time.deltaTime * lerpSpeed);
             popupPanelTransform.LookAt(playerCamera);
             popupPanelTransform.Rotate(0, 180, 0);  // 패널이 뒤집히지 않도록 180도 회전
+        }
+    }
+
+    // 이거 밑에 있는 ray 껐다 켜는 버튼
+    public void SetCanvasActive(bool active)
+    {
+        if (active)
+        {
+            raycaster.enabled = true;
+        }
+        else
+        {
+            raycaster.enabled = false;
         }
     }
 }

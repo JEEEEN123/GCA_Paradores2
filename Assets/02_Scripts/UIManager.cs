@@ -38,6 +38,9 @@ public class UIManager : MonoBehaviour
     private Text contentText;
     private bool isStageEnd;
 
+    private GameObject canvasObject;
+
+
     // 각 씬마다 여러 안내문을 저장하는 이중 리스트
     private List<List<string>> scenePopupMessages = new List<List<string>>()
     {
@@ -109,6 +112,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        canvasObject = GameObject.FindWithTag("VRUIBackground");
+
         fadeImg = GameObject.FindWithTag("VRUIBackground").transform.Find("FadeImg").GetComponent<Image>();
 
         // title 씬을 제외하고는 
@@ -139,6 +144,7 @@ public class UIManager : MonoBehaviour
         // buttons linking 
         AssignButtonEvents();
 
+        popupIndex = 0;
         ShowFirstPopup();
 
     }
@@ -186,6 +192,9 @@ public class UIManager : MonoBehaviour
                 Debug.Log("start message");
 
                 popupIndex++;
+
+                canvasObject.GetComponent<CanvasFollower>().SetCanvasActive(true);
+
             }
             else
             {
@@ -195,6 +204,9 @@ public class UIManager : MonoBehaviour
                 // init this 
                 popupIndex = 0;
                 isStageEnd = true;
+
+                canvasObject.GetComponent<CanvasFollower>().SetCanvasActive(false);
+
 
             }
         }
@@ -208,6 +220,9 @@ public class UIManager : MonoBehaviour
                 ShowPopup(sceneEndingPopupMessages[GameManager.Instance.currentSceneIndex][popupIndex]);
                 Debug.Log("ending message: "+ popupIndex);
                 popupIndex++;
+
+                canvasObject.GetComponent<CanvasFollower>().SetCanvasActive(true);
+
             }
             else
             {
@@ -220,6 +235,9 @@ public class UIManager : MonoBehaviour
 
                 // 다음씬 ㄱㄱ 
                 GameManager.Instance.LoadSceneCall();
+
+                canvasObject.GetComponent<CanvasFollower>().SetCanvasActive(false);
+
 
             }
 
