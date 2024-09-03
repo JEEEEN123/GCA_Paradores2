@@ -26,14 +26,14 @@ public class ShipMove : MonoBehaviour
             transform.Translate(0, 0, -Speed * Time.deltaTime);
         }
 
-        //if (move_x >= 0.5f)
-        //{
-        //    transform.Translate(Speed * Time.deltaTime, 0, 0);
-        //}
-        //else if (move_x <= -0.5f)
-        //{
-        //    transform.Translate(-Speed * Time.deltaTime, 0, 0);
-        //}
+        if (move_x >= 0.5f)
+        {
+            transform.Translate(Speed * Time.deltaTime, 0, 0);
+        }
+        else if (move_x <= -0.5f)
+        {
+            transform.Translate(-Speed * Time.deltaTime, 0, 0);
+        }
 
         // ����ת��  
         if (move_y > 0.5f)
