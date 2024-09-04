@@ -61,8 +61,7 @@ public class UIManager : MonoBehaviour
         */
 
         // Scene 2
-        new List<string>() { "먼저, 호숫가에서 배를 타고 여유롭게 즐겨보세요.\n 노를 저으며 호수의 고요함을 느껴보시길 바랍니다.",
-            "다음 목적지인 분수대를 향해 노를 저어 이동하세요." },  
+        new List<string>() { "먼저, 호숫가에서 배를 타고 여유롭게 즐겨보세요.\n 호수의 고요함을 느끼며 \n 다음 목적지인 분수대를 향해 \n 노를 저어 이동하세요." },  
         //"팔을 좌우로 흔들어 배를 조정할 수 있습니다.\n 노를 저으며 호수의 고요함을 느껴보시길 바랍니다.",
 
         // Scene 3
@@ -127,6 +126,8 @@ public class UIManager : MonoBehaviour
     {
         isStageEnd = false;
         int sceneIndex = GameManager.Instance.currentSceneIndex;
+
+        canvasObject = GameObject.FindWithTag("VRUIBackground");
 
         fadeImg = GameObject.FindWithTag("VRUIBackground").transform.Find("FadeImg").GetComponent<Image>();
 
